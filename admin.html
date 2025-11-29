@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - fleet App</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin:0;
+        }
+        header {
+            background:#333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            gap:10px;
+            flex-wrap: wrap;
+        }
+        header select,header button {
+            padding: 4px 6px;
+
+        }
+        .container {
+            display:flex;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 260px;
+            border-right: 1px solid;
+            padding:15px;
+            box-sizing: border-box;
+
+        }
+        .main {
+            flex:1;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .main{
+            flex:1;
+            padding:15px;
+            box-sizing:border-box;
+        }
+        .form-group{
+            margin-bottom: 10px;
+            display:flex;
+            flex-direction: column;
+        }
+        label{
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        input,select{
+            padding: 5px;
+            font-size: 14px;
+        }
+        button{
+            cursor:pointer;
+        }
+        .cards{
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 10px;
+        }
+        .cards {
+            border:1px solid #ccc;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .card img{
+            width:100%;
+            height: 120Px;
+            object-fit: cover;
+            margin-bottom: 8px;
+        }
+        .card-buttons{
+            margin-top: 8px;
+            display: flex;
+            gap:5px;
+            flex-wrap:wrap;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <span>Filters:</span>
+        <label>Category:
+            <select id="filterCategory">
+                <option value="All">All</option>
+                <option value="Auto">Auto</option>
+                <option value="Car">Car</option>
+                <option value="Truck">Truck</option>
+                <option value="Bus">Bus</option>
+            </select>
+        </label>
+        <label>Availability:
+            <select id="filterAvailability">
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
+        </label>
+        <button id="clearFilterBtn">clearFilter</button>
+    </header>
+    <div class="Container">
+        <aside class="sidebar">
+            <h3>Add Fleet</h3>
+            <form id="fleetForm">
+                <div class="form-group">
+                    <label for="regNo">Reg No Of Vehicle</label>
+                    <input type="text" id="regNo" required/>
+                </div>
+                <div class="form-group">
+                    <label for="Category">Category</label>
+                    <select id="Category" required>
+                        <option value="">Select</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Car">Car</option>
+                        <option value="Truck">Truck</option>
+                        <option value="Bus">Bus</option>
+
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="driver">Driver Name</label>
+                    <input type="text" id="driver" required/>
+                </div>
+                <div class="form-group">
+                    <label for="isAvailable">Is Available</label>
+                    <select id="isAvailable">
+                        <option value="Available">Available</option>
+                        <option value="Unavailable">Unavailable</option>
+                    </select>
+                </div>
+                <button type="submit">Add Fleet</button>
+            </form>
+        </aside>
+        <main class="main">
+            <h3>Fleet List</h3>
+            <div id="cardsContainer" class="cards"></div>
+        </main>
+        </div>
+        <script>
+            const SAMPLE_IMG=""
+            const form = document.getElementById("FleetForm");
+            const cardsContainer = document.getElementById("cardsContainer");
+            const filterCategory = document.getElementById("filterCategory");
+            const filterAvailability = document.getElementById("filterAvailability");
+            const clearFilterBtn = document.getElementById("clearFilterBtn");
+            let Vehicle = [];
+            form.addEventListener("submit",function(e){
+                e.preventDefault();
+                const regNo = document.getElementById("regNo").value.trim();
+                const Category = document.getElementById("Category").value;
+                const driver = document.getElementById("driver").value.trim();
+                const isAvailable = document.getElementById("isAvailable").value;
+                if(!regNo || !Category || !driver) {
+                    alert("All fields are required");
+                    return;
+                }
+                const newVehicle = {
+                    id:Date.now(),
+                    regNo,
+                    Category,
+                    driver,
+                    availability:isAvailable 
+                };
+            Vehicle.push(newVehicle);
+            renderVechicle();
+            form.reset();
+            document.getElementById("isAvailable").value = "Available";
+
+
+            });
+            function renderVechicle(){
+                cardsContainer.innerHTML = "";
+                const catFilter = filterCategory.value;
+                const availFilter = filterAvailability.value;
+                const filtered = Vehicle.filter(v => {
+                    const catOk = catFilter === "All" ? true:v.category === catFilter;
+                    const availOk = availFilter === "All"? true : v.availability === availFilter;
+                    return catOk && availOk;
+                });
+                filtered.forEach(v => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHtml = 
+                })
+            }
+        </script>
+    
+</body>
+</html>
