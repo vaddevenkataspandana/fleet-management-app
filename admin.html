@@ -142,7 +142,7 @@
         </main>
         </div>
         <script>
-            const SAMPLE_IMG=""
+            const SAMPLE_IMG="https://coding-platform.s3.amazonaws.com/dev/lms/tickets/5e80fcb6-3f8e-480c-945b-30a5359eb40e/JNmYjkVr3WOjsrbu.png"
             const form = document.getElementById("FleetForm");
             const cardsContainer = document.getElementById("cardsContainer");
             const filterCategory = document.getElementById("filterCategory");
@@ -185,7 +185,8 @@
                 filtered.forEach(v => {
                     const card = document.createElement("div");
                     card.className = "card";
-                    card.innerHtml = 
+                    card.innerHTML = <img src="${SAMPLE_IMG}" alt ="vehicle"/>
+                    
                 })
             }
         </script>
